@@ -76,4 +76,7 @@ Research user records, historical layouts, email profiles, and network-level BGP
 | **Hunter.io** | Professional email verification, schema patterns, and open-source employee search. | [Watch Video (8m)](https://www.youtube.com/watch?v=PRqOj5qM1ic) |
 | **Intelligence X** | Searching the deep/dark web, archives, and past data leaks by selector. | [Watch Video (13m)](https://www.youtube.com/watch?v=PRqOj5qM1ic) |
 | **DODNIC WHOIS** | Tracing government and military IP blocks, contact emails, and point of contacts (POCs). | [Watch Video (8m)](https://www.youtube.com/watch?v=MVwJonSWm34) |
-| **HE BGP Toolkit** | Viewing ASNs, p
+| **HE BGP Toolkit** | Viewing ASNs, peer route mapping, and checking IP blocks for routing anomalies. | [Watch Video (10m)](https://www.youtube.com/watch?v=MVwJonSWm34) |
+
+---
+*Generated for mission support workflows.*
