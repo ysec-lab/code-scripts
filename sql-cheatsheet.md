@@ -37,17 +37,122 @@ A database most often contains one or more tables.
 *   `CREATE INDEX` - creates an index (search key)
 *   `DROP INDEX` - deletes an index
 
-## Core SQL Clauses
-The `SELECT` statement is used to extract data from a database.
+---
 
+## Querying Data
+
+### SELECT Statement
 ```sql
 SELECT column1, column2, ...
 FROM table_name;
 ```
-The `SELECT DISTINCT` statement is used to return only distinct (unique) values.
-
+The `SELECT DISTINCT` statement is used to return only distinct (unique) values:
 ```sql
 SELECT DISTINCT column1, column2, ...
 FROM table_name;
 ```
 
+### WHERE Clause
+The `WHERE` clause is used to filter records. It extracts only those records that fulfill a specific condition.
+```sql
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+```
+*Text Fields vs. Numeric Fields Examples:*
+```sql
+SELECT * FROM Customers WHERE CustomerID = 1;
+SELECT * FROM Customers WHERE CustomerID > 80;
+```
+
+### Operators
+| Operator | Description | 
+| :--- | :--- |
+| `=` | Equal |
+| `>` | Greater than |
+| `<` | Less than |
+| `>=` | Greater than or equal |
+| `<=` | Less than or equal |
+| `<>` | Not equal. *(Note: In some versions of SQL this operator may be written as `!=`)* |
+| `BETWEEN` | Between a certain range |
+| `LIKE` | Search for a pattern |
+| `IN` | To specify multiple possible values for a column |
+
+### ORDER BY
+The `ORDER BY` keyword is used to sort the result-set in ascending (`ASC`) or descending (`DESC`) order. It sorts the result-set in ascending order by default.
+```sql
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition
+ORDER BY column1, column2, ... ASC|DESC;
+```
+*Example:*
+```sql
+SELECT * FROM Customers
+WHERE CustomerID = 1
+ORDER BY Country ASC, CustomerName DESC;
+```
+
+---
+
+## Logical Operators
+
+### AND Operator
+The `WHERE` clause can contain one or many `AND` operators. The `AND` operator is used to filter records based on more than one condition.
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Spain' AND CustomerName LIKE 'G%';
+```
+
+### OR Operator
+The `WHERE` clause can contain one or more `OR` operators. The `OR` operator is used to filter records based on more than one condition.
+```sql
+SELECT * FROM Customers
+WHERE Country = 'Germany' OR Country = 'Spain';
+```
+
+### NOT Operator
+The `NOT` operator is used in the `WHERE` clause to return all records that DO NOT match the specified criteria. It reverses the result of a condition from true to false and vice-versa.
+```sql
+SELECT * FROM Customers
+WHERE NOT Country = 'Spain';
+```
+*Note: The `NOT` operator is also used in combination with other operators to exclude data, such as: `NOT LIKE`, `NOT BETWEEN`, `NOT IN`, `IS NOT NULL`, and `NOT EXISTS`.*
+
+---
+
+## Handling NULL Values
+If a field in a table is optional, it is possible to insert or update a record without adding any value to this field. This way, the field will be saved with a `NULL` value. 
+
+A `NULL` value represents unknown, missing, or inapplicable data in a database field. It is not a value itself, but a placeholder to indicate the absence of data.
+
+*IS NULL Syntax:*
+```sql
+SELECT column_names
+FROM table_name
+WHERE column_name IS NULL;
+```
+*IS NOT NULL Syntax:*
+```sql
+SELECT column_names
+FROM table_name
+WHERE column_name IS NOT NULL;
+```
+
+---
+
+## Modifying Data
+
+### UPDATE Statement
+The `UPDATE` statement is used to update or modify one or more records in a table.
+```sql
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+```
+
+### DELETE Statement
+The `DELETE` statement is used to delete existing records in a table.
+```sql
+DELETE FROM table_name WHERE condition;
+```
