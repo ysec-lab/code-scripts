@@ -338,3 +338,127 @@ FROM Customers;
   SELECT column_name(s)
   FROM table_name AS alias_name;
   ```
+
+---
+
+## SQL Joins & Relational Data
+
+### What is a SQL JOIN?
+A `JOIN` clause is used to combine rows from two or more tables, based on a related column between them.
+
+### Different Types of SQL JOINs
+Here are the four primary types of joins used in SQL to combine relational datasets:
+
+*   **(INNER) JOIN:** Returns only rows that have matching values in both tables.
+*   **LEFT (OUTER) JOIN:** Returns all rows from the left table, and only the matched rows from the right table.
+*   **RIGHT (OUTER) JOIN:** Returns all rows from the right table, and only the matched rows from the left table.
+*   **FULL (OUTER) JOIN:** Returns all rows when there is a match in either the left or right table.
+
+ ---
+
+### The SQL `INNER JOIN` Keyword
+SQL INNER JOIN
+The INNER JOIN returns only rows that have matching values in both tables.
+Tip: You can use just JOIN instead of INNER JOIN, as INNER is the default join type.
+
+#### Syntax
+```sql
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2
+ON table1.matching_column = table2.matching_column;
+```
+![SQL INNER JOIN Venn Diagram](https://www.w3schools.com/sql/img_innerjoin.gif)
+
+ ---
+
+### The SQL `LEFT JOIN` Keyword
+The LEFT JOIN returns all rows from the left table (table1), and only the matched rows from the right table (table2).
+If there is no match in the right table, the result for the columns from the right table will be NULL.
+The LEFT JOIN and LEFT OUTER JOIN keywords are equal - the OUTER keyword is optional.
+
+#### Syntax
+```sql
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2
+ON table1.matching_column = table2.matching_column;
+```
+
+#### Venn Diagram Representation
+The following visual Venn diagram shows how the `LEFT JOIN` includes all records from the left table along with matching records from the right:
+
+![SQL LEFT JOIN Venn Diagram](https://www.w3schools.com/sql/img_leftjoin.gif)
+
+#### LEFT JOIN Example
+The following query lists all customers and any orders they might have placed. If a customer hasn't placed any orders, their details are still returned with a `NULL` Order ID:
+
+```sql
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+```
+
+---
+
+### The SQL `RIGHT JOIN` Keyword
+The RIGHT JOIN returns all rows from the right table (table2), and only the matched rows from the left table (table1).
+If there is no match in the left table, the result for the columns from the left table will be NULL.
+The RIGHT JOIN and RIGHT OUTER JOIN keywords are equal - the OUTER keyword is optional.
+
+#### Syntax
+```sql
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.matching_column = table2.matching_column;
+```
+
+#### Venn Diagram Representation
+The following visual Venn diagram shows how the `RIGHT JOIN` includes all records from the right table along with matching records from the left:
+
+![SQL RIGHT JOIN Venn Diagram](https://www.w3schools.com/sql/img_rightjoin.gif)
+
+#### RIGHT JOIN Example
+The following query will list all orders and the employees who created them. If there's an order not matched to a specific employee, the order details are still returned with a `NULL` employee name:
+
+```sql
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+```
+
+---
+
+### The SQL `FULL OUTER JOIN` Keyword
+The FULL JOIN returns all rows when there is a match in either the left or right table.
+If a row in the left table has no match in the right table, the result set includes the left row's data and NULL values for all columns of the right table.
+If a row in the right table has no match in the left table, the result set includes the right row's data and NULL values for all columns of the left table.
+The FULL JOIN and FULL OUTER JOIN keywords are equal - the OUTER keyword is optional.
+
+#### Syntax
+```sql
+SELECT column_name(s)
+FROM table1
+FULL OUTER JOIN table2
+ON table1.matching_column = table2.matching_column;
+```
+
+#### Venn Diagram Representation
+The following visual Venn diagram shows how the `FULL OUTER JOIN` returns all records from both datasets, matching up rows where possible:
+
+![SQL FULL OUTER JOIN Venn Diagram](https://www.w3schools.com/sql/img_fulljoin.gif)
+
+#### FULL OUTER JOIN Example
+The following query selects all customers and all orders, presenting matching information or filling in missing pairs with `NULL`:
+
+```sql
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+```
+---
+
