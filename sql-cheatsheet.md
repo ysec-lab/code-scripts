@@ -461,4 +461,141 @@ FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
 ORDER BY Customers.CustomerName;
 ```
 ---
+### The SQL EXISTS Operator
+The `EXISTS` operator is used in a `WHERE` clause to check whether a subquery returns any rows.
+* It evaluates to `TRUE` if the subquery returns at least one row, and `FALSE` otherwise.
 
+#### EXISTS Syntax
+```sql
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS (subquery);
+```
+
+---
+
+### The SQL ANY Operator
+The `ANY` operator is used to compare a single value to every value returned by a subquery.
+* The `ANY` operator evaluates to `TRUE` if at least one value in the subquery result-set meets the comparison condition.
+* It must be preceded by a standard comparison operator (`=`, `>`, `<`, `>=`, `<=`, `<>`).
+
+#### ANY Syntax
+```sql
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ANY (subquery);
+```
+
+---
+
+### The SQL ALL Operator
+The `ALL` operator is used to compare a single value to every value returned by a subquery.
+* The `ALL` operator evaluates to `TRUE` if every single value in the subquery result-set meets the comparison condition.
+* It is typically used with `WHERE` or `HAVING` statements and must be preceded by a standard comparison operator.
+
+#### ALL Syntax
+```sql
+SELECT column_name(s)
+FROM table_name
+WHERE column_name operator ALL (subquery);
+```
+
+---
+
+## SQL Comments
+
+Comments are used to write explanations inside SQL scripts or to temporarily disable execution of specific code lines.
+
+### SQL Single-line Comments
+Single-line comments start with `--`. Any text after `--` up to the end of the line will be completely ignored during query execution.
+
+#### Examples:
+
+**1. Explanation Comment**
+```sql
+-- Selects all German customers
+SELECT * FROM Customers
+WHERE Country = 'Germany';
+```
+
+**2. End-of-line Comment**
+```sql
+SELECT * FROM Customers; -- This query retrieves all customers
+```
+
+**3. Preventing Execution Comment**
+```sql
+-- SELECT * FROM Customers;
+SELECT * FROM Products;
+```
+
+---
+
+## Daily Admin SQL Commands
+
+These commands are highly useful for daily administration, environment setup, database monitoring, auditing, and user access management (particularly tailored for Oracle Database environments).
+
+### System Info (Date, Time, PWD)
+
+*   **Current Date & Time:**
+    ```sql
+    SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') FROM dual;
+    ```
+*   **Current User (PWD equivalent):**
+    ```sql
+    SHOW USER;
+    ```
+*   **Current Database Instance:**
+    ```sql
+    SELECT instance_name FROM v$instance;
+    ```
+
+### Screen Management & Formatting
+
+*   **Clear Screen Console:** Clears the terminal screen buffer.
+    ```sql
+    CLEAR SCREEN; -- (or CLEAR SCR;)
+    ```
+*   **Reset Formatting Breaks:** Clears formatting breakpoints.
+    ```sql
+    CLEAR BREAKS;
+    ```
+
+### Account Auditing
+
+*Note: Before running these auditing queries, run the following page configuration to prevent long text and table layout wrapping:*
+```sql
+SET LINESIZE 150 PAGESIZE 100;
+```
+
+*   **Get Locked Accounts:**
+    ```sql
+    SELECT username, account_status, lock_date 
+    FROM dba_users 
+    WHERE account_status LIKE '%LOCKED%';
+    ```
+*   **Get Expired Accounts:**
+    ```sql
+    SELECT username, account_status, expiry_date 
+    FROM dba_users 
+    WHERE account_status LIKE '%EXPIRED%';
+    ```
+
+### User Management
+
+*   **Reset Password:**
+    ```sql
+    ALTER USER username IDENTIFIED BY new_password;
+    ```
+*   **Unlock Account:**
+    ```sql
+    ALTER USER username ACCOUNT UNLOCK;
+    ```
+*   **Lock Account:**
+    ```sql
+    ALTER USER username ACCOUNT LOCK;
+    ```
+*   **Force Password Expiry:**
+    ```sql
+    ALTER USER username PASSWORD EXPIRE;
+    ```
