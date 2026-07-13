@@ -156,3 +156,185 @@ The `DELETE` statement is used to delete existing records in a table.
 ```sql
 DELETE FROM table_name WHERE condition;
 ```
+
+
+
+---
+
+## SQL Aggregate Functions
+
+An aggregate function performs a calculation on a set of values and returns a single summarized value. They are commonly paired with the `GROUP BY` clause to group results.
+
+### Summary of Common Aggregate Functions
+* `MIN()` - Returns the smallest value of a column.
+* `MAX()` - Returns the largest value of a column.
+* `COUNT()` - Returns the number of rows that match a criteria.
+* `SUM()` - Returns the total sum of a numerical column.
+* `AVG()` - Returns the average value of a numerical column.
+
+---
+
+### The `MIN()` Function
+Works with numeric, string, and date data types.
+
+```sql
+SELECT MIN(column_name)
+FROM table_name
+WHERE condition;
+```
+
+*Example (Return lowest price):*
+```sql
+SELECT MIN(Price)
+FROM Products;
+```
+
+---
+
+### The `MAX()` Function
+Works with numeric, string, and date data types.
+
+```sql
+SELECT MAX(column_name)
+FROM table_name
+WHERE condition;
+```
+
+*Example (Return highest price):*
+```sql
+SELECT MAX(Price)
+FROM Products;
+```
+
+---
+
+### The `COUNT()` Function
+Counts records based on the argument passed to it:
+
+```sql
+SELECT COUNT([DISTINCT] column_name | *)
+FROM table_name
+WHERE condition;
+```
+
+#### Key COUNT Behaviors:
+* `COUNT(*)` - Counts the total number of rows in the table (including rows with `NULL` values).
+* `COUNT(column_name)` - Counts all non-null values inside the specified column.
+* `COUNT(DISTINCT column_name)` - Counts only the unique, non-null values inside the column.
+
+---
+
+### The `SUM()` Function
+Calculates the total sum of a numeric column, ignoring `NULL` values.
+
+```sql
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+```
+
+*Example (Summing product quantities):*
+```sql
+SELECT SUM(Quantity)
+FROM OrderDetails;
+```
+
+---
+
+### The `AVG()` Function
+Calculates the mathematical average of a numeric column, ignoring `NULL` values.
+
+```sql
+SELECT AVG(column_name)
+FROM table_name
+WHERE condition;
+```
+
+*Example (Calculating average price):*
+```sql
+SELECT AVG(Price)
+FROM Products;
+```
+
+---
+
+## Pattern Matching & Wildcards
+
+### The `LIKE` Operator
+The `LIKE` operator is used in a `WHERE` clause to search for a specified text pattern in a column. It relies on wildcard characters to describe the pattern.
+
+```sql
+-- Select all customers whose name starts with "a"
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';
+
+-- Select all customers whose city contains "on"
+SELECT * FROM Customers
+WHERE City LIKE '%on%';
+```
+
+### SQL Wildcard Characters
+Wildcard characters substitute one or more characters in a string:
+
+| Symbol | Description | Example |
+| :--- | :--- | :--- |
+| `%` | Represents zero, one, or multiple characters. | `'a%'` (Starts with 'a') |
+| `_` | Represents a single character. | `'h_t'` (Matches 'hot', 'hat', 'hit') |
+| `[]` | Represents any single character within the brackets.* | `'[mst]%'` (Starts with 'm', 's', or 't') |
+| `^` | Represents any character NOT inside the brackets.* | `'[^mst]%'` (Does not start with 'm', 's', or 't') |
+| `-` | Represents any single character within the specified range.* | `'[a-c]%'` (Starts with 'a', 'b', or 'c') |
+| `{}` | Represents any escaped character.** | Used to escape literal wildcard symbols. |
+
+*\*Note: Support for brackets `[]`, negation `^`, and range `-` symbols may vary depending on the specific RDBMS (e.g., fully supported in SQL Server).*
+
+---
+
+## Advanced Selection: `IN`, `BETWEEN`, & Aliases
+
+### The `IN` Operator
+The `IN` operator allows you to specify multiple values in a `WHERE` clause. It acts as shorthand for multiple `OR` conditions.
+
+```sql
+SELECT * FROM Customers
+WHERE Country IN ('Germany', 'France', 'UK');
+```
+
+---
+
+### The `BETWEEN` Operator
+Filters values within a given range. The range is **inclusive** (meaning the beginning and end values are included). Values can be numbers, text, or dates.
+
+```sql
+SELECT * FROM Products
+WHERE Price BETWEEN 10 AND 20;
+```
+
+#### Syntax:
+```sql
+SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+```
+
+---
+
+### SQL Aliases (`AS`)
+Aliases are used to give a table or a column a temporary, more readable name for the duration of a query.
+
+```sql
+-- Alias for columns
+SELECT CustomerID AS ID, CustomerName AS Customer
+FROM Customers;
+```
+
+#### Syntax:
+* **Column Alias:**
+  ```sql
+  SELECT column_name AS alias_name
+  FROM table_name;
+  ```
+* **Table Alias:**
+  ```sql
+  SELECT column_name(s)
+  FROM table_name AS alias_name;
+  ```
